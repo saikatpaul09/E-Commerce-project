@@ -1,6 +1,6 @@
 # E-Commerce-project
 Hi everyone! This is my first open source project. I have a built an amazon like E-commerce web application using react in the frontend and Node js on the backend. I deployed the app on netify. Please feel free to review code and raise a PR suggesting your changes. I tried my level best to optimize both the front end and back end part of the application. 
-Technologies/libraries used:-                                                                                                                 
+Technologies/libraries used :-                                                                                                                 
 1. Front end
    -> React
    -> styled-components for react
