@@ -8,7 +8,7 @@ const HomePage = () => {
     <>
       <Row>
         {products.map((product) => (
-          <Col sm={12} md={6} lg={4} xl={3} className="h-100">
+          <Col sm={12} md={6} lg={4} xl={3} className="mt-3">
             <Product product={product} />
           </Col>
         ))}
