@@ -1,6 +1,6 @@
 import { Link, useParams } from "react-router-dom";
 import { Row, Col, Image, ListGroup, Card, Button } from "react-bootstrap";
-import products from "../products";
+import products from "./products";
 import { Rating } from "../components/Rating";
 
 const ProductScreen = () => {
@@ -18,6 +18,7 @@ const ProductScreen = () => {
           <Image src={product?.image} alt={product?.name} fluid />
         </Col>
         <Col md={4}>
+        <ListGroup variant="flush">
           <ListGroup.Item>
             <h3>{product?.name}</h3>
           </ListGroup.Item>
@@ -28,8 +29,9 @@ const ProductScreen = () => {
             />
           </ListGroup.Item>
           <ListGroup.Item>Price: ${product?.price}</ListGroup.Item>
+          <ListGroup.Item>{product?.description}</ListGroup.Item>
+          </ListGroup>
         </Col>
-
         <Col md={3}>
           <Card>
             <ListGroup variant="flush">
