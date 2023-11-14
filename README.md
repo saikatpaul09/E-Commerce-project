@@ -3,7 +3,6 @@ Hi everyone! This is my first open source project. I have a built an amazon like
 Technologies/libraries used :-                                                                                                                 
 1. Front end
    -> React
-   -> styled-components for react
    -> Redux tool kit for state management
    -> React query for caching
    -> Moment js

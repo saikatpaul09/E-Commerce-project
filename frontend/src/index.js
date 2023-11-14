@@ -1,13 +1,36 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
+import {
+  createBrowserRouter,
+  RouterProvider,
+  Route,
+  createRoutesFromElements,
+} from "react-router-dom";
+import { Provider } from "react-redux";
+import store from "./store";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 import "./assets/styles/index.css";
 import "./assets/styles/bootstrap.custom.css";
+import HomePage from "./pages/HomePage";
+import ProductScreen from "./pages/ProductScreen";
+import { CartScreen } from "./pages/CartScreen";
+
+const router = createBrowserRouter(
+  createRoutesFromElements(
+    <Route path="/" element={<App />}>
+      <Route index={true} path="/" element={<HomePage />} />
+      <Route index={true} path="product/:id" element={<ProductScreen />} />
+      <Route index={true} path="cart" element={<CartScreen />} />
+    </Route>
+  )
+);
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <React.StrictMode>
-    <App />
+    <Provider store={store}>
+      <RouterProvider router={router} />
+    </Provider>
   </React.StrictMode>
 );
 
