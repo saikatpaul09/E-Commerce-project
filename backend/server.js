@@ -23,7 +23,13 @@ app.get("/", (req, res) => {
 app.use(cookieParser());
 
 //cors midleware
-app.use(cors());
+app.use(
+  cors({
+    origin: ["http://localhost:3000"],
+    credentials: true,
+    methods: ["POST", "GET"],
+  })
+);
 
 app.use("/api/products", productRoutes);
 app.use("/api/users", userRoutes);

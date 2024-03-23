@@ -20,6 +20,7 @@ export const CartScreen = () => {
   const addTocartHandler = async (product, qty) => {
     await dispatch(addTocart({ ...product, qty }));
   };
+  const isLoggedIn = localStorage.getItem("userInfo");
   return (
     <Row>
       <Col>
@@ -83,7 +84,15 @@ export const CartScreen = () => {
               )
             </ListGroup.Item>
             <ListGroup.Item>
-              <Button type="button" variant="light">
+              <Button
+                type="button"
+                variant="light"
+                onClick={() =>
+                  navigate(
+                    isLoggedIn ? "/shipping" : "/login?redirect=/shipping"
+                  )
+                }
+              >
                 Proceed to checkout
               </Button>
             </ListGroup.Item>
