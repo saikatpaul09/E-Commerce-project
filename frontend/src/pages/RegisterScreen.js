@@ -3,18 +3,20 @@ import { Link, useLocation, useNavigate } from "react-router-dom";
 import { Form, Button, Row, Col } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import { FormContainer } from "../components/FormContainer";
-import { useLoginMutation } from "../slices/usersApiSlice";
+import { useRegisterMutation } from "../slices/usersApiSlice";
 import { setCredentials } from "../slices/authSlice";
 import { Bounce, ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { Loader } from "../components/Loader";
 
-export const LoginScreen = () => {
+export const RegisterScreen = () => {
+  const [name, setName] = useState(false);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const [login, { isLoading }] = useLoginMutation();
+  const [register, { isLoading }] = useRegisterMutation();
   const { userInfo } = useSelector((state) => state.auth);
   const { search } = useLocation();
   const sp = new URLSearchParams(search);
@@ -29,9 +31,13 @@ export const LoginScreen = () => {
   const submitHandler = async (e) => {
     e.preventDefault();
     try {
-      const res = await login({ email, password }).unwrap();
-      dispatch(setCredentials({ ...res }));
-      navigate(redirect);
+      if (password !== confirmPassword) {
+        toast.error("Password do not match");
+      } else {
+        const res = await register({ name, email, password }).unwrap();
+        dispatch(setCredentials({ ...res }));
+        navigate(redirect);
+      }
     } catch (error) {
       toast.error(`${error.data.message}`, {
         position: "top-right",
@@ -62,8 +68,18 @@ export const LoginScreen = () => {
         transition={Bounce}
       />
       <FormContainer>
-        <h1>Sign In</h1>
+        <h1>Sign Up</h1>
         <Form onSubmit={submitHandler}>
+          <Form.Group controlId="name" className="my-3">
+            <Form.Label>Name</Form.Label>
+            <Form.Control
+              type="name"
+              placeholder="Enter name"
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+            ></Form.Control>
+          </Form.Group>
+
           <Form.Group controlId="email" className="my-3">
             <Form.Label>Email Address</Form.Label>
             <Form.Control
@@ -73,6 +89,7 @@ export const LoginScreen = () => {
               onChange={(e) => setEmail(e.target.value)}
             ></Form.Control>
           </Form.Group>
+
           <Form.Group controlId="password" className="my-3">
             <Form.Label>Password</Form.Label>
             <Form.Control
@@ -81,24 +98,32 @@ export const LoginScreen = () => {
               value={password}
               onChange={(e) => setPassword(e.target.value)}
             ></Form.Control>
+          </Form.Group>
+
+          <Form.Group controlId="password" className="my-3">
+            <Form.Label>Confirm Password</Form.Label>
+            <Form.Control
+              type="confirm_password"
+              placeholder="Enter password to confirm"
+              value={confirmPassword}
+              onChange={(e) => setConfirmPassword(e.target.value)}
+            ></Form.Control>
             <Button
               type="submit"
               variant="primary"
               className="mt-3"
               disabled={isLoading}
             >
-              Sign In
+              Sign Up
             </Button>
             {isLoading && <Loader />}
           </Form.Group>
         </Form>
         <Row className="py-3">
           <Col>
-            New customer ?{" "}
-            <Link
-              to={redirect ? `/register?redirect=${redirect}` : "/register"}
-            >
-              Register
+            Already have an account ?
+            <Link to={redirect ? `/login?redirect=${redirect}` : "/login"}>
+              Login
             </Link>
           </Col>
         </Row>
