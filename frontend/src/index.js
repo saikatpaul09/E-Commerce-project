@@ -17,15 +17,23 @@ import ProductScreen from "./pages/ProductScreen";
 import { CartScreen } from "./pages/CartScreen";
 import { LoginScreen } from "./pages/LoginScreen";
 import { RegisterScreen } from "./pages/RegisterScreen";
+import ShippingScreen from "./pages/ShippingScreen";
+import { PrivateRoute } from "./pages/PrivateRoute";
+import { PaymentScreen } from "./pages/PaymentScreen";
 const router = createBrowserRouter(
   createRoutesFromElements(
     <Route path="/" element={<App />}>
       <Route index={true} path="/" element={<HomePage />} />
-      <Route index={true} path="product/:id" element={<ProductScreen />} />
-      <Route index={true} path="cart" element={<CartScreen />} />
-      <Route index={true} path="login" element={<LoginScreen />} />
-      <Route index={true} path="register" element={<RegisterScreen />} />
-      <Route index={true} path="shipping" element={<>ss</>} />
+      <Route path="product/:id" element={<ProductScreen />} />
+      <Route path="cart" element={<CartScreen />} />
+      <Route path="login" element={<LoginScreen />} />
+      <Route path="register" element={<RegisterScreen />} />
+      <Route path="" element={<PrivateRoute />}>
+        <Route path="shipping" element={<ShippingScreen />} />
+      </Route>
+      <Route path="" element={<PrivateRoute />}>
+        <Route path="payment" element={<PaymentScreen />} />
+      </Route>
     </Route>
   )
 );
